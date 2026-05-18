@@ -177,6 +177,29 @@
             box-shadow: 0 8px 16px rgba(56, 189, 248, 0.3);
         }
 
+        /* --- AD CONTAINER --- */
+        .ad-container {
+            background-color: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 40px 0;
+            text-align: center;
+            min-height: 280px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .ad-container-inline {
+            background-color: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 30px 0;
+            text-align: center;
+        }
+
         /* --- FORM UPLOAD --- */
         .upload-section {
             background-color: #1e293b;
@@ -475,6 +498,10 @@
                 margin: 20px;
                 padding: 20px;
             }
+
+            .ad-container {
+                min-height: 200px;
+            }
         }
     </style>
 </head>
@@ -502,10 +529,34 @@
     <!-- Konten -->
     <div class="container">
         
+        <!-- AD SPACE 1 - Top Banner -->
+        <div class="ad-container">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-6052778382422158"
+                 data-ad-slot="1234567890"
+                 data-ad-format="horizontal"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+
         <!-- Daftar Aplikasi -->
         <div id="apps">
             <h2 class="section-title">Aplikasi Trending</h2>
             <div class="app-grid" id="appGrid"></div>
+        </div>
+
+        <!-- AD SPACE 2 - Between Apps -->
+        <div class="ad-container-inline">
+            <ins class="adsbygoogle"
+                 style="display:block; text-align:center;"
+                 data-ad-client="ca-pub-6052778382422158"
+                 data-ad-slot="2345678901"
+                 data-ad-format="rectangle"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
         </div>
 
         <!-- Form Upload -->
@@ -566,6 +617,18 @@
                     <button type="submit" class="btn-submit" id="submitBtn">Upload Sekarang</button>
                 </form>
             </div>
+        </div>
+
+        <!-- AD SPACE 3 - Before Footer -->
+        <div class="ad-container">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-6052778382422158"
+                 data-ad-slot="3456789012"
+                 data-ad-format="horizontal"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
         </div>
 
     </div>
