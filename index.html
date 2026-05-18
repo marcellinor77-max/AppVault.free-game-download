@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AppVault - Platform Unduhan Aplikasi</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #0f172a;
+            color: #e2e8f0;
+            line-height: 1.6;
+        }
+
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+
+        /* --- NAVBAR --- */
+        .navbar {
+            background-color: #1e293b;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #38bdf8;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a:hover { color: #38bdf8; }
+        .btn-upload-nav {
+            background-color: #3b82f6;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            position: relative;
+        }
+        .btn-upload-nav:hover { background-color: #2563eb; }
+
+        /* --- HERO --- */
+        .hero {
+            text-align: center;
+            padding: 80px 20px;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #94a3b8;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* --- KONTEN UTAMA --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .section-title {
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            border-left: 4px solid #38bdf8;
+            padding-left: 10px;
+        }
+
+        .app-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 24px;
+            margin-bottom: 60px;
+        }
+
+        .app-card {
+            background: linear-gradient(135deg, #1e293b 0%, #2d3a52 100%);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(56, 189, 248, 0.1);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+        }
+
+        .app-card:hover {
+            transform: translateY(-8px);
+            border-color: #38bdf8;
+            box-shadow: 0 16px 32px rgba(56, 189, 248, 0.2);
+        }
+
+        .app-icon {
+            height: 180px;
+            background: linear-gradient(135deg, #334155 0%, #475569 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .app-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .app-info {
+            padding: 20px;
+        }
+
+        .app-title {
+            font-weight: bold;
+            font-size: 1.15rem;
+            margin-bottom: 8px;
+            color: #f1f5f9;
+        }
+
+        .app-category {
+            font-size: 0.85rem;
+            color: #94a3b8;
+            margin-bottom: 12px;
+            display: block;
+            text-transform: capitalize;
+        }
+
+        .app-size {
+            font-size: 0.8rem;
+            color: #64748b;
+            margin-bottom: 12px;
+        }
+
+        .btn-download {
+            display: block;
+            width: 100%;
+            text-align: center;
+            background: linear-gradient(135deg, #38bdf8 0%, #0ea5e9 100%);
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: bold;
+            color: white;
+            margin-top: 12px;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-download:hover { 
+            transform: scale(1.02);
+            box-shadow: 0 8px 16px rgba(56, 189, 248, 0.3);
+        }
+
+        /* --- FORM UPLOAD --- */
+        .upload-section {
+            background-color: #1e293b;
+            padding: 40px;
+            border-radius: 16px;
+            margin-top: 40px;
+            border: 2px dashed #334155;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            color: #cbd5e1;
+            font-weight: bold;
+        }
+
+        .form-input, .form-select, textarea {
+            width: 100%;
+            padding: 12px;
+            background-color: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            color: white;
+            outline: none;
+            font-size: 1rem;
+        }
+
+        .form-input:focus, .form-select:focus, textarea:focus {
+            border-color: #38bdf8;
+            box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.1);
+        }
+
+        textarea {
+            resize: vertical;
+            font-family: inherit;
+        }
+
+        /* Image Preview */
+        .image-preview-container {
+            display: none;
+            margin-bottom: 15px;
+        }
+
+        .image-preview {
+            max-width: 150px;
+            max-height: 150px;
+            border-radius: 8px;
+            border: 2px solid #38bdf8;
+        }
+
+        /* Drop zone */
+        .drop-zone {
+            border: 2px dashed #475569;
+            padding: 40px;
+            text-align: center;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: 0.3s;
+            background-color: #0f172a;
+        }
+
+        .drop-zone:hover {
+            border-color: #38bdf8;
+            background-color: rgba(56, 189, 248, 0.05);
+        }
+
+        .drop-zone.dragover {
+            border-color: #38bdf8;
+            background-color: rgba(56, 189, 248, 0.1);
+        }
+
+        .drop-zone-icon {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        .file-info {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #10b981;
+            border-radius: 8px;
+            color: white;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background-color: #334155;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(to right, #38bdf8, #10b981);
+            transition: width 0.3s;
+        }
+
+        .progress-text {
+            text-align: center;
+            margin-top: 5px;
+            font-size: 0.9rem;
+            color: #94a3b8;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(to right, #3b82f6, #2563eb);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-submit:hover { opacity: 0.9; }
+        .btn-submit:disabled { background: #475569; cursor: not-allowed; }
+
+        /* Downloads Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1001;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background-color: #1e293b;
+            margin: 40px auto;
+            padding: 30px;
+            border-radius: 16px;
+            max-width: 900px;
+            max-height: 90vh;
+            overflow-y: auto;
+            border: 1px solid #334155;
+            animation: slideIn 0.3s;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            border-bottom: 2px solid #334155;
+            padding-bottom: 16px;
+        }
+
+        .modal-header h2 {
+            font-size: 1.8rem;
+            color: #f1f5f9;
+        }
+
+        .close {
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            color: #94a3b8;
+            transition: 0.3s;
+        }
+
+        .close:hover {
+            color: #38bdf8;
+        }
+
+        .downloads-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 20px;
+        }
+
+        .download-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .download-card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 12px;
+        }
+
+        .download-card h3 {
+            font-size: 1rem;
+            margin-bottom: 8px;
+            color: #f1f5f9;
+        }
+
+        .download-card p {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            margin-bottom: 12px;
+        }
+
+        .btn-clear {
+            width: 100%;
+            padding: 10px;
+            background: #ef4444;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .btn-clear:hover {
+            background: #dc2626;
+        }
+
+        .empty-message {
+            text-align: center;
+            padding: 40px;
+            color: #94a3b8;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: #64748b;
+            margin-top: 60px;
+            border-top: 1px solid #1e293b;
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #10b981;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            transform: translateY(100px);
+            transition: transform 0.3s;
+            z-index: 1002;
+        }
+        
+        .toast.show { transform: translateY(0); }
+
+        .badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #ef4444;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            .app-grid, .downloads-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+            
+            .modal-content {
+                margin: 20px;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">⚡ AppVault</div>
+        <div class="nav-links">
+            <a href="#apps">Aplikasi</a>
+            <a href="#upload-area" class="btn-upload-nav">Upload App</a>
+            <a href="#" id="downloadsBtn" class="btn-upload-nav" style="background: #10b981;">
+                Downloads <span class="badge" id="downloadBadge" style="display:none;">0</span>
+            </a>
+            <a href="admin.html" class="btn-upload-nav" style="background: #14b8a6;">Admin</a>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <header class="hero">
+        <h1>Platform Unduhan APK & Software</h1>
+        <p>Dapatkan aplikasi terbaru dan terbaik. Atau Upload aplikasi kamu sendiri di sini.</p>
+    </header>
+
+    <!-- Konten -->
+    <div class="container">
+        
+        <!-- Daftar Aplikasi -->
+        <div id="apps">
+            <h2 class="section-title">Aplikasi Trending</h2>
+            <div class="app-grid" id="appGrid"></div>
+        </div>
+
+        <!-- Form Upload -->
+        <div id="upload-area">
+            <h2 class="section-title">Unggah Aplikasi Anda</h2>
+            <div class="upload-section">
+                <form id="uploadForm">
+                    <div class="form-group">
+                        <label class="form-label">Nama Aplikasi</label>
+                        <input type="text" class="form-input" id="appName" placeholder="Contoh: Studio Foto Keren" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Kategori</label>
+                        <select class="form-select" id="appCategory">
+                            <option>Game</option>
+                            <option>Produktivitas</option>
+                            <option>Sosial</option>
+                            <option>Tools</option>
+                            <option>Hiburan</option>
+                            <option>Multimedia</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Gambar/Ikon Aplikasi</label>
+                        <input type="file" id="imageInput" accept="image/*" class="form-input">
+                        <div class="image-preview-container">
+                            <img id="imagePreview" class="image-preview" alt="Preview">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">File Aplikasi (APK/EXE/ZIP)</label>
+                        <div class="drop-zone" id="dropZone">
+                            <div class="drop-zone-icon">📂</div>
+                            <div><strong>Klik di sini untuk pilih file</strong></div>
+                            <div style="font-size: 0.9rem; color: #94a3b8; margin-top: 5px;">atau drag & drop</div>
+                        </div>
+                        <input type="file" id="fileInput" style="display: none;">
+                        <div class="file-info" id="fileInfo">
+                            📄 File dipilih: <span id="fileNameDisplay"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Deskripsi</label>
+                        <textarea class="form-input" id="appDesc" rows="4" placeholder="Fitur-fiturnya..."></textarea>
+                    </div>
+
+                    <div class="progress-container" id="progressContainer">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill"></div>
+                        </div>
+                        <div class="progress-text" id="progressText">Mengupload: 0%</div>
+                    </div>
+
+                    <button type="submit" class="btn-submit" id="submitBtn">Upload Sekarang</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Downloads Modal -->
+    <div id="downloadsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>📥 Unduhan Anda</h2>
+                <span class="close" id="closeModal">&times;</span>
+            </div>
+            <div class="downloads-grid" id="downloadsList">
+                <div class="empty-message">Belum ada unduhan</div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 AppVault. All Rights Reserved.</p>
+    </footer>
+
+    <!-- Toast -->
+    <div id="toast" class="toast">✅ Aplikasi berhasil diupload!</div>
+
+    <script>
+        // --- LOCAL STORAGE APP MANAGEMENT ---
+        const APPS_KEY = 'appvault_apps';
+        const DOWNLOADS_KEY = 'appvault_downloads';
+
+        function getApps() {
+            const apps = localStorage.getItem(APPS_KEY);
+            return apps ? JSON.parse(apps) : [];
+        }
+
+        function saveApp(app) {
+            const apps = getApps();
+            const newApp = {
+                id: Date.now(),
+                ...app
+            };
+            apps.push(newApp);
+            localStorage.setItem(APPS_KEY, JSON.stringify(apps));
+            return newApp;
+        }
+
+        function getDownloads() {
+            const downloads = localStorage.getItem(DOWNLOADS_KEY);
+            return downloads ? JSON.parse(downloads) : [];
+        }
+
+        function addDownload(app) {
+            const downloads = getDownloads();
+            if (!downloads.find(d => d.id === app.id)) {
+                downloads.push({...app, downloadedAt: new Date().toLocaleString('id-ID')});
+                localStorage.setItem(DOWNLOADS_KEY, JSON.stringify(downloads));
+            }
+            updateDownloadsBadge();
+        }
+
+        function removeDownload(appId) {
+            let downloads = getDownloads();
+            downloads = downloads.filter(d => d.id !== appId);
+            localStorage.setItem(DOWNLOADS_KEY, JSON.stringify(downloads));
+            updateDownloadsBadge();
+            renderDownloads();
+        }
+
+        function updateDownloadsBadge() {
+            const badge = document.getElementById('downloadBadge');
+            const count = getDownloads().length;
+            if (count > 0) {
+                badge.textContent = count;
+                badge.style.display = 'inline-block';
+            } else {
+                badge.style.display = 'none';
+            }
+        }
+
+        // --- RENDER APPS ---
+        function renderApps() {
+            const grid = document.getElementById('appGrid');
+            const apps = getApps();
+
+            if (apps.length === 0) {
+                grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #94a3b8;">Belum ada aplikasi. Mulai upload!</p>';
+                return;
+            }
+
+            grid.innerHTML = apps.map(app => `
+                <div class="app-card">
+                    <div class="app-icon">
+                        ${app.image ? `<img src="${app.image}" alt="${app.name}">` : '📦'}
+                    </div>
+                    <div class="app-info">
+                        <div class="app-title">${app.name}</div>
+                        <span class="app-category">${app.category}</span>
+                        <div class="app-size">📦 ${app.fileSize} MB</div>
+                        <button class="btn-download" onclick="downloadApp(${app.id})">Masuk</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // --- DOWNLOAD APP ---
+        function downloadApp(appId) {
+            const app = getApps().find(a => a.id === appId);
+            if (app) {
+                addDownload(app);
+                showToast(`✅ ${app.name} ditambahkan ke unduhan!`);
+                
+                // Simulate download (dalam praktik nyata, ini akan download file asli)
+                if (app.file) {
+                    const link = document.createElement('a');
+                    link.href = app.file;
+                    link.download = app.filename;
+                    link.click();
+                }
+            }
+        }
+
+        // --- RENDER DOWNLOADS ---
+        function renderDownloads() {
+            const list = document.getElementById('downloadsList');
+            const downloads = getDownloads();
+
+            if (downloads.length === 0) {
+                list.innerHTML = '<div class="empty-message" style="grid-column: 1/-1;">Belum ada unduhan</div>';
+                return;
+            }
+
+            list.innerHTML = downloads.map(app => `
+                <div class="download-card">
+                    ${app.image ? `<img src="${app.image}" alt="${app.name}">` : '<div style="width:100%;height:150px;background:#334155;border-radius:8px;"></div>'}
+                    <h3>${app.name}</h3>
+                    <p>${app.category} • ${app.fileSize} MB</p>
+                    <button class="btn-clear" onclick="removeDownload(${app.id})">Hapus</button>
+                </div>
+            `).join('');
+        }
+
+        // --- SHOW TOAST ---
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        // --- UPLOAD FORM ---
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.getElementById('fileInput');
+        const imageInput = document.getElementById('imageInput');
+        const imagePreview = document.getElementById('imagePreview');
+        const imagePreviewContainer = document.querySelector('.image-preview-container');
+        const fileInfo = document.getElementById('fileInfo');
+        const fileNameDisplay = document.getElementById('fileNameDisplay');
+        const uploadForm = document.getElementById('uploadForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const progressContainer = document.getElementById('progressContainer');
+        const progressFill = document.getElementById('progressFill');
+        const progressText = document.getElementById('progressText');
+
+        let selectedFile = null;
+        let selectedImage = null;
+
+        // Image upload
+        imageInput.addEventListener('change', function(e) {
+            if (this.files && this.files.length > 0) {
+                selectedImage = this.files[0];
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    imagePreview.src = event.target.result;
+                    imagePreviewContainer.style.display = 'block';
+                };
+                reader.readAsDataURL(selectedImage);
+            }
+        });
+
+        // File upload
+        dropZone.addEventListener('click', function() {
+            fileInput.click();
+        });
+
+        fileInput.addEventListener('change', function(e) {
+            if (this.files && this.files.length > 0) {
+                selectedFile = this.files[0];
+                showFileInfo();
+            }
+        });
+
+        dropZone.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            dropZone.classList.add('dragover');
+        });
+
+        dropZone.addEventListener('dragleave', function() {
+            dropZone.classList.remove('dragover');
+        });
+
+        dropZone.addEventListener('drop', function(e) {
+            e.preventDefault();
+            dropZone.classList.remove('dragover');
+            if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+                fileInput.files = e.dataTransfer.files;
+                selectedFile = e.dataTransfer.files[0];
+                showFileInfo();
+            }
+        });
+
+        function showFileInfo() {
+            if (selectedFile) {
+                const fileSize = (selectedFile.size / (1024 * 1024)).toFixed(2);
+                fileNameDisplay.textContent = selectedFile.name + " (" + fileSize + " MB)";
+                fileInfo.style.display = "block";
+            }
+        }
+
+        // Submit
+        uploadForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const appName = document.getElementById('appName').value;
+            const appCategory = document.getElementById('appCategory').value;
+            const appDesc = document.getElementById('appDesc').value;
+
+            if (!appName) {
+                alert("Mohon isi nama aplikasi!");
+                return;
+            }
+
+            if (!selectedFile) {
+                alert("Mohon pilih file aplikasi!");
+                return;
+            }
+
+            startUpload(appName, appCategory, appDesc);
+        });
+
+        function startUpload(appName, appCategory, appDesc) {
+            submitBtn.disabled = true;
+            submitBtn.textContent = "Mengupload...";
+            progressContainer.style.display = "block";
+            
+            let percent = 0;
+            const interval = setInterval(function() {
+                percent += 5;
+                progressFill.style.width = percent + "%";
+                progressText.textContent = "Mengupload: " + percent + "%";
+
+                if (percent >= 100) {
+                    clearInterval(interval);
+                    finishUpload(appName, appCategory, appDesc);
+                }
+            }, 100);
+        }
+
+        function finishUpload(appName, appCategory, appDesc) {
+            const fileSize = (selectedFile.size / (1024 * 1024)).toFixed(2);
+            let imageData = null;
+
+            if (selectedImage) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    imageData = event.target.result;
+                    const newApp = saveApp({
+                        name: appName,
+                        category: appCategory,
+                        description: appDesc,
+                        fileSize: fileSize,
+                        filename: selectedFile.name,
+                        image: imageData
+                    });
+
+                    submitBtn.textContent = "Upload Selesai!";
+                    showToast(`✅ ${appName} berhasil diupload!`);
+
+                    setTimeout(function() {
+                        uploadForm.reset();
+                        imagePreviewContainer.style.display = "none";
+                        fileInfo.style.display = "none";
+                        progressContainer.style.display = "none";
+                        progressFill.style.width = "0%";
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = "Upload Sekarang";
+                        renderApps();
+                    }, 2000);
+                };
+                reader.readAsDataURL(selectedImage);
+            } else {
+                const newApp = saveApp({
+                    name: appName,
+                    category: appCategory,
+                    description: appDesc,
+                    fileSize: fileSize,
+                    filename: selectedFile.name,
+                    image: null
+                });
+
+                submitBtn.textContent = "Upload Selesai!";
+                showToast(`✅ ${appName} berhasil diupload!`);
+
+                setTimeout(function() {
+                    uploadForm.reset();
+                    imagePreviewContainer.style.display = "none";
+                    fileInfo.style.display = "none";
+                    progressContainer.style.display = "none";
+                    progressFill.style.width = "0%";
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = "Upload Sekarang";
+                    renderApps();
+                }, 2000);
+            }
+        }
+
+        // --- DOWNLOADS MODAL ---
+        const modal = document.getElementById('downloadsModal');
+        const downloadsBtn = document.getElementById('downloadsBtn');
+        const closeModal = document.getElementById('closeModal');
+
+        downloadsBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            modal.style.display = 'block';
+            renderDownloads();
+        });
+
+        closeModal.addEventListener('click', function() {
+            modal.style.display = 'none';
+        });
+
+        window.addEventListener('click', function(e) {
+            if (e.target == modal) {
+                modal.style.display = 'none';
+            }
+        });
+
+        // Initialize
+        window.addEventListener('load', function() {
+            renderApps();
+            updateDownloadsBadge();
+        });
+    </script>
+</body>
+</html>
